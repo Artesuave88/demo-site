@@ -1,5 +1,6 @@
 import * as cheerio from 'cheerio';
 import { mkdir, writeFile } from 'node:fs/promises';
+import { pathToFileURL } from 'node:url';
 
 const BASE = 'https://www.jobs.nhs.uk';
 const SEARCH = `${BASE}/candidate/search/results?keyword=social%20worker&language=en`;
@@ -80,34 +81,38 @@ function parsePage(html) {
   return jobs;
 }
 
-console.log('Reading NHS Jobs pagination…');
-const firstHtml = await fetchPage(1);
-const $ = cheerio.load(firstHtml);
-const pageText = clean($('.nhsuk-pagination__page').last().text());
-const totalPages = Number(pageText.match(/of\s+(\d+)/i)?.[1] || 1);
-const resultText = clean($('[data-test="search-result-query"]').text());
-const keywordMatches = Number(resultText.replace(/\D/g, '')) || 0;
-const pages = Array.from({ length: totalPages - 1 }, (_, index) => index + 2);
-const collected = parsePage(firstHtml);
+export async function scrapeNhs() {
+  console.log('Reading NHS Jobs pagination…');
+  const firstHtml = await fetchPage(1);
+  const $ = cheerio.load(firstHtml);
+  const pageText = clean($('.nhsuk-pagination__page').last().text());
+  const totalPages = Number(pageText.match(/of\s+(\d+)/i)?.[1] || 1);
+  const resultText = clean($('[data-test="search-result-query"]').text());
+  const keywordMatches = Number(resultText.replace(/\D/g, '')) || 0;
+  const pages = Array.from({ length: totalPages - 1 }, (_, index) => index + 2);
+  const collected = parsePage(firstHtml);
 
-console.log(`Scanning ${totalPages} pages (${keywordMatches} keyword matches), ${CONCURRENCY} requests at a time…`);
-for (let offset = 0; offset < pages.length; offset += CONCURRENCY) {
-  const batch = pages.slice(offset, offset + CONCURRENCY);
-  const results = await Promise.all(batch.map(async (page) => parsePage(await fetchPage(page))));
-  collected.push(...results.flat());
-  if ((offset / CONCURRENCY) % 10 === 0) console.log(`Processed ${Math.min(offset + CONCURRENCY + 1, totalPages)}/${totalPages} pages`);
-  await delay(120);
+  console.log(`Scanning ${totalPages} NHS pages (${keywordMatches} keyword matches), ${CONCURRENCY} requests at a time…`);
+  for (let offset = 0; offset < pages.length; offset += CONCURRENCY) {
+    const batch = pages.slice(offset, offset + CONCURRENCY);
+    const results = await Promise.all(batch.map(async (page) => parsePage(await fetchPage(page))));
+    collected.push(...results.flat());
+    if ((offset / CONCURRENCY) % 10 === 0) console.log(`Processed ${Math.min(offset + CONCURRENCY + 1, totalPages)}/${totalPages} NHS pages`);
+    await delay(120);
+  }
+
+  return {
+    jobs: [...new Map(collected.map((job) => [job.id, job])).values()],
+    keywordMatches,
+    pagesScanned: totalPages,
+    source: SEARCH
+  };
 }
 
-const jobs = [...new Map(collected.map((job) => [job.id, job])).values()];
-const snapshot = {
-  jobs,
-  fetchedAt: Date.now(),
-  keywordMatches,
-  pagesScanned: totalPages,
-  source: SEARCH
-};
-
-await mkdir('src/lib', { recursive: true });
-await writeFile('src/lib/jobs.json', `${JSON.stringify(snapshot, null, 2)}\n`);
-console.log(`Saved ${jobs.length} exact-title vacancies to src/lib/jobs.json`);
+if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+  const result = await scrapeNhs();
+  const snapshot = { ...result, fetchedAt: Date.now() };
+  await mkdir('src/lib', { recursive: true });
+  await writeFile('src/lib/jobs.json', `${JSON.stringify(snapshot, null, 2)}\n`);
+  console.log(`Saved ${result.jobs.length} exact-title NHS vacancies to src/lib/jobs.json`);
+}

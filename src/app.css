@@ -55,7 +55,7 @@ h1 em { color: #ef663c; font-weight: 500; }
 
 .jobs-section { max-width: 1180px; margin: auto; padding: 88px 28px 100px; }
 .section-heading { display: flex; justify-content: space-between; align-items: end; margin-bottom: 46px; }
-.section-heading h2, .how h2, .employers h2 { font-size: clamp(40px, 5vw, 58px); line-height: 1.1; margin-top: 12px; }
+.section-heading h2, .how h2 { font-size: clamp(40px, 5vw, 58px); line-height: 1.1; margin-top: 12px; }
 .section-heading > p { max-width: 410px; color: #6a817d; line-height: 1.7; font-size: 14px; }
 .jobs-layout { display: grid; grid-template-columns: 230px 1fr; gap: 42px; }
 .filter-title { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #dfe3dc; padding-bottom: 17px; font-size: 14px; }
@@ -67,11 +67,6 @@ select { border: 1px solid #d8ddd7; background: #fff; color: #294d48; border-rad
 .filter-group label { font-size: 12px; color: #526d68; display: flex; align-items: center; gap: 8px; }
 .filter-group label i { margin-left: auto; font-style: normal; color: #9aaba7; }
 .filter-group input { accent-color: #ef663c; }
-.alert-card { background: #173b37; color: #fff; margin-top: 30px; padding: 24px 22px; border-radius: 5px; }
-.alert-card > div { color: #f4c757; font-size: 28px; }
-.alert-card h3 { font-family: 'Newsreader'; font-size: 23px; margin: 11px 0 8px; }
-.alert-card p { font-size: 11px; line-height: 1.6; color: #bed0cd; }
-.alert-card button { color: #f6c75b; border: 0; background: none; padding: 8px 0 0; font-size: 11px; font-weight: 700; }
 .results-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
 .source-warning { background: #fff2d7; border: 1px solid #ead39f; color: #76591b; padding: 11px 14px; margin-bottom: 12px; border-radius: 4px; font-size: 11px; }
 .results-top p { color: #6c827f; font-size: 12px; }
@@ -110,23 +105,11 @@ article.featured { border-left: 3px solid #ef663c; }
 .steps b { color: #ef764e; font-size: 11px; letter-spacing: 1px; }
 .steps h3 { font-family: 'Newsreader'; font-size: 27px; margin: 13px 0 8px; }
 .steps p { color: #a8bdb9; font-size: 12px; line-height: 1.7; max-width: 270px; }
-.employers { max-width: 1180px; margin: auto; padding: 80px 28px; display: flex; align-items: center; justify-content: space-between; }
-.employers > div { max-width: 710px; }
-.employers p { color: #6c827e; }
 footer { padding: 45px max(28px, calc((100vw - 1124px)/2)); background: #fff; display: grid; grid-template-columns: 1fr 1fr; gap: 25px; align-items: center; border-top: 1px solid #e4e5df; }
 footer p, footer small { color: #81938f; font-size: 11px; }
 footer > div { display: flex; gap: 25px; justify-content: end; font-size: 11px; font-weight: 600; }
 footer small { grid-column: 1 / -1; border-top: 1px solid #ecece6; padding-top: 20px; }
 
-.modal-backdrop { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; padding: 20px; background: #102f2bd9; backdrop-filter: blur(3px); }
-.modal { background: #f8f7f1; border-radius: 7px; width: min(490px, 100%); padding: 42px; position: relative; box-shadow: 0 30px 80px #0004; }
-.modal-close { position: absolute; right: 16px; top: 12px; border: 0; background: none; font-size: 28px; color: #69807b; }
-.modal h2 { font-size: 43px; margin: 15px 0 10px; }
-.modal p { color: #6d827e; line-height: 1.6; }
-.modal form { display: flex; gap: 8px; margin-top: 24px; }
-.modal input { flex: 1; min-width: 0; padding: 14px; border: 1px solid #d6ddd8; border-radius: 4px; outline: none; }
-.success-icon { width: 55px; height: 55px; display: grid; place-items: center; border-radius: 50%; background: #dcebe4; color: #2a665b; font-size: 25px; }
-.modal-button { margin-top: 12px; }
 
 @media (max-width: 900px) {
   nav { display: none; position: absolute; top: 82px; left: 0; right: 0; background: #fff; padding: 16px 28px; box-shadow: 0 10px 20px #0001; }
@@ -140,7 +123,6 @@ footer small { grid-column: 1 / -1; border-top: 1px solid #ecece6; padding-top: 
   .jobs-layout { grid-template-columns: 1fr; }
   aside { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
   .filter-title { grid-column: 1 / -1; }
-  .alert-card { margin: 0; grid-row: span 2; }
 }
 
 @media (max-width: 640px) {
@@ -158,19 +140,16 @@ footer small { grid-column: 1 / -1; border-top: 1px solid #ecece6; padding-top: 
   .popular { flex-wrap: wrap; }
   .jobs-section { padding: 62px 18px; }
   .section-heading { flex-direction: column; margin-bottom: 32px; }
-  .section-heading h2, .how h2, .employers h2 { font-size: 42px; }
+  .section-heading h2, .how h2 { font-size: 42px; }
   aside { display: block; }
-  .filter-group, .alert-card { margin-top: 20px; }
+  .filter-group { margin-top: 20px; }
   .results-top { align-items: start; }
   .job-meta { margin-left: 0; flex-wrap: wrap; gap: 10px 18px; }
   .salary { margin-left: 0; }
   .job-foot { flex-wrap: wrap; }
   .job-foot a { width: 100%; margin-left: 0; }
   .steps { grid-template-columns: 1fr; gap: 30px; }
-  .employers { flex-direction: column; align-items: start; gap: 22px; }
   footer { grid-template-columns: 1fr; }
   footer > div { justify-content: start; flex-wrap: wrap; }
   footer small { grid-column: auto; }
-  .modal { padding: 35px 24px; }
-  .modal form { flex-direction: column; }
 }
