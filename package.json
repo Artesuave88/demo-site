@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "scrape:jobs": "node scripts/scrape-jobs.mjs",
-    "scrape:nhs": "node scripts/scrape-nhs.mjs"
+    "scrape:nhs": "node scripts/scrape-nhs.mjs",
+    "scrape:cafcass": "node scripts/scrape-cafcass.mjs"
   },
   "devDependencies": {
     "@sveltejs/adapter-auto": "latest",

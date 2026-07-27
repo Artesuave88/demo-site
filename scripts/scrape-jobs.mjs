@@ -1,6 +1,7 @@
 import { mkdir, writeFile } from 'node:fs/promises';
 import { scrapeNhs } from './scrape-nhs.mjs';
 import { scrapeJobsGoPublic } from './scrape-jobsgopublic.mjs';
+import { scrapeCafcass } from './scrape-cafcass.mjs';
 
 function normalise(value = '') {
   return value.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
@@ -15,7 +16,7 @@ function dedupeKey(job) {
   ].join('|');
 }
 
-const results = await Promise.allSettled([scrapeNhs(), scrapeJobsGoPublic()]);
+const results = await Promise.allSettled([scrapeNhs(), scrapeJobsGoPublic(), scrapeCafcass()]);
 const sources = results
   .filter((result) => result.status === 'fulfilled')
   .map((result) => result.value);
