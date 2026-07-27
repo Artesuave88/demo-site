@@ -16,6 +16,10 @@ function dedupeKey(job) {
   ].join('|');
 }
 
+function exactSocialWorker(job) {
+  return /\bsocial\s+worker\b/i.test(job.title || '');
+}
+
 const results = await Promise.allSettled([scrapeNhs(), scrapeJobsGoPublic(), scrapeCafcass()]);
 const sources = results
   .filter((result) => result.status === 'fulfilled')
@@ -27,7 +31,10 @@ const failures = results
 if (!sources.length) throw new Error(`Every job source failed: ${failures.join('; ')}`);
 
 const jobs = [...new Map(
-  sources.flatMap((source) => source.jobs).map((job) => [dedupeKey(job), job])
+  sources
+    .flatMap((source) => source.jobs)
+    .filter(exactSocialWorker)
+    .map((job) => [dedupeKey(job), job])
 ).values()];
 
 const snapshot = {

@@ -31,6 +31,10 @@ function teamFrom(title) {
   return 'Social Work';
 }
 
+function exactSocialWorker(job) {
+  return /\bsocial\s+worker\b/i.test(job.VacancyTitle || '');
+}
+
 function mapJob(job) {
   const description = clean(job.JobDescription);
   const location = clean(job.Location) || 'England';
@@ -132,7 +136,9 @@ export async function scrapeCafcass() {
     await delay(150);
   }
 
-  const jobs = [...new Map(vacancies.map(mapJob).map((job) => [job.id, job])).values()];
+  const jobs = [...new Map(
+    vacancies.filter(exactSocialWorker).map(mapJob).map((job) => [job.id, job])
+  ).values()];
   return {
     jobs,
     keywordMatches: vacancies.length,
