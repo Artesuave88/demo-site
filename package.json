@@ -11,6 +11,7 @@
   },
   "devDependencies": {
     "@sveltejs/adapter-auto": "latest",
+    "@sveltejs/adapter-vercel": "^6.3.4",
     "@sveltejs/kit": "latest",
     "@sveltejs/vite-plugin-svelte": "latest",
     "@tailwindcss/vite": "latest",
