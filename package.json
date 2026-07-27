@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "scrape:nhs": "node scripts/scrape-nhs.mjs"
   },
   "devDependencies": {
     "@sveltejs/adapter-auto": "latest",
@@ -16,5 +17,8 @@
     "svelte": "latest",
     "tailwindcss": "latest",
     "vite": "latest"
+  },
+  "dependencies": {
+    "cheerio": "^1.2.0"
   }
 }
