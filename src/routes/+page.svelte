@@ -291,7 +291,14 @@
               </div>
               <div class="job-meta"><span>⌖ {job.location}{#if userCoords && jobDistance(job) !== null} · {jobDistance(job).toFixed(1)} miles{/if}</span><span>◷ {job.type}</span><span>⌂ {job.mode}</span></div>
               <div class="salary">{job.salary} <small>per year</small></div>
-              <div class="job-foot"><span>{job.team}</span><p>Posted {job.posted} · closes {job.closing} · via {job.source}</p><a href={job.url} target="_blank" rel="noopener noreferrer">View role →</a></div>
+              <div class="job-foot">
+                <span>{job.team}</span>
+                <p>Posted {job.posted} · closes {job.closing} · via {job.source}</p>
+                <a href={job.url} target="_blank" rel="noopener noreferrer">View role →</a>
+              </div>
+              {#if job.source === 'Adzuna'}
+                <a class="adzuna-credit" href="https://www.adzuna.co.uk/" target="_blank" rel="noopener noreferrer">Jobs by Adzuna</a>
+              {/if}
             </article>
           {:else}
             <div class="empty"><b>No exact matches yet.</b><p>Try clearing a filter or searching a nearby city.</p></div>

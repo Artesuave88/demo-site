@@ -81,6 +81,7 @@ select { border: 1px solid #d8ddd7; background: #fff; color: #294d48; border-rad
 .filter-group input { accent-color: #ef663c; }
 .results-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
 .source-warning { background: #fff2d7; border: 1px solid #ead39f; color: #76591b; padding: 11px 14px; margin-bottom: 12px; border-radius: 4px; font-size: 11px; }
+.adzuna-credit { display: inline-flex; min-width: 116px; min-height: 23px; align-items: center; justify-content: center; margin-top: 12px; padding: 2px 8px; border-radius: 3px; background: #1f2747; color: #fff; font-size: 11px; font-weight: 700; text-decoration: none; }
 .results-top p { color: #6c827f; font-size: 12px; }
 .results-top p strong { color: #173b37; }
 .results-top label { font-size: 11px; color: #728783; }
