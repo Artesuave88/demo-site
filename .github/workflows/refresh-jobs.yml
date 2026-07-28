@@ -2,8 +2,8 @@ name: Refresh job listings
 
 on:
   schedule:
-    # Run once a day at 7:15 AM UK time, including GMT/BST changes.
-    - cron: "15 7 * * *"
+    # Run once a day at 5:15 AM UK time, including GMT/BST changes.
+    - cron: "15 5 * * *"
       timezone: "Europe/London"
   workflow_dispatch:
 
