@@ -698,6 +698,23 @@
       "featured": false
     },
     {
+      "id": "B0236-26-0214",
+      "title": "Safeguarding Manager - Registered Social Worker",
+      "employer": "We Are With You",
+      "location": "Rotherham S60 2EN",
+      "region": "Rotherham S60 2EN",
+      "type": "Permanent",
+      "mode": "On-site",
+      "pattern": "Full time",
+      "salary": "£30,151 to £45,619 a year",
+      "posted": "28 July 2026",
+      "closing": "20 August 2026",
+      "team": "Social Work",
+      "source": "NHS Jobs",
+      "url": "https://www.jobs.nhs.uk/candidate/jobadvert/B0236-26-0214?keyword=social%20worker&language=en&page=5",
+      "featured": false
+    },
+    {
       "id": "F0069-26-0094",
       "title": "Social Worker – Children’s Assessment Service (South)",
       "employer": "Oxfordshire County Council",
@@ -783,23 +800,6 @@
       "featured": false
     },
     {
-      "id": "C9267-26-0856",
-      "title": "Social Worker - Community Mental Health (FTC)",
-      "employer": "Oxford Health NHS Trust",
-      "location": "Aylesbury HP20 1EG",
-      "region": "Aylesbury HP20 1EG",
-      "type": "Contract",
-      "mode": "On-site",
-      "pattern": "Full time",
-      "salary": "£39,959 to £48,117 a year",
-      "posted": "21 July 2026",
-      "closing": "31 July 2026",
-      "team": "Mental Health",
-      "source": "NHS Jobs",
-      "url": "https://www.jobs.nhs.uk/candidate/jobadvert/C9267-26-0856?keyword=social%20worker&language=en&page=5",
-      "featured": false
-    },
-    {
       "id": "B0261-26-0024",
       "title": "Substance Misuse Social Worker - Community Team",
       "employer": "The Alcohol & Drug Service",
@@ -817,6 +817,23 @@
       "featured": false
     },
     {
+      "id": "C9267-26-0856",
+      "title": "Social Worker - Community Mental Health (FTC)",
+      "employer": "Oxford Health NHS Trust",
+      "location": "Aylesbury HP20 1EG",
+      "region": "Aylesbury HP20 1EG",
+      "type": "Contract",
+      "mode": "On-site",
+      "pattern": "Full time",
+      "salary": "£39,959 to £48,117 a year",
+      "posted": "21 July 2026",
+      "closing": "31 July 2026",
+      "team": "Mental Health",
+      "source": "NHS Jobs",
+      "url": "https://www.jobs.nhs.uk/candidate/jobadvert/C9267-26-0856?keyword=social%20worker&language=en&page=5",
+      "featured": false
+    },
+    {
       "id": "F0069-26-0099",
       "title": "Social Worker - Family Support and Safeguarding - Banbury",
       "employer": "Oxfordshire County Council",
@@ -830,7 +847,7 @@
       "closing": "31 July 2026",
       "team": "Children & Families",
       "source": "NHS Jobs",
-      "url": "https://www.jobs.nhs.uk/candidate/jobadvert/F0069-26-0099?keyword=social%20worker&language=en&page=5",
+      "url": "https://www.jobs.nhs.uk/candidate/jobadvert/F0069-26-0099?keyword=social%20worker&language=en&page=6",
       "featured": false
     },
     {
@@ -933,6 +950,23 @@
       "team": "Children & Families",
       "source": "NHS Jobs",
       "url": "https://www.jobs.nhs.uk/candidate/jobadvert/F0063-26-0107?keyword=social%20worker&language=en&page=6",
+      "featured": false
+    },
+    {
+      "id": "C9333-26-0944",
+      "title": "Occupational Therapist/Mental Health Nurse/Social Worker",
+      "employer": "Central and North West London NHS Foundation Trust",
+      "location": "London SW1V 1DX",
+      "region": "London SW1V 1DX",
+      "type": "Permanent",
+      "mode": "Flexible",
+      "pattern": "Flexible working, Full time",
+      "salary": "£47,951 to £56,863 a year",
+      "posted": "28 July 2026",
+      "closing": "5 August 2026",
+      "team": "Mental Health",
+      "source": "NHS Jobs",
+      "url": "https://www.jobs.nhs.uk/candidate/jobadvert/C9333-26-0944?keyword=social%20worker&language=en&page=6",
       "featured": false
     },
     {
@@ -1259,23 +1293,6 @@
       "featured": false
     },
     {
-      "id": "jgp-73800",
-      "title": "Fostering Assessment Social Worker",
-      "employer": "Leicestershire County Council",
-      "location": "Anstey, Leicester LE7, UK",
-      "region": "Anstey, Leicester LE7, UK",
-      "type": "Contract",
-      "mode": "Hybrid",
-      "pattern": "Full time",
-      "salary": "£38,734 to £45,982 a year",
-      "posted": "23 July 2026",
-      "closing": "2 August 2026",
-      "team": "Fostering",
-      "source": "Jobs Go Public",
-      "url": "https://www.jobsgopublic.com/job/fostering-assessment-social-worker-73800",
-      "featured": false
-    },
-    {
       "id": "jgp-73823",
       "title": "Social Worker - Tunbridge Wells Community Team",
       "employer": "Kent County Council",
@@ -1290,6 +1307,23 @@
       "team": "Social Work",
       "source": "Jobs Go Public",
       "url": "https://www.jobsgopublic.com/job/social-worker-tunbridge-wells-community-team-73823",
+      "featured": false
+    },
+    {
+      "id": "jgp-73800",
+      "title": "Fostering Assessment Social Worker",
+      "employer": "Leicestershire County Council",
+      "location": "Anstey, Leicester LE7, UK",
+      "region": "Anstey, Leicester LE7, UK",
+      "type": "Contract",
+      "mode": "Hybrid",
+      "pattern": "Full time",
+      "salary": "£38,734 to £45,982 a year",
+      "posted": "23 July 2026",
+      "closing": "2 August 2026",
+      "team": "Fostering",
+      "source": "Jobs Go Public",
+      "url": "https://www.jobsgopublic.com/job/fostering-assessment-social-worker-73800",
       "featured": false
     },
     {
@@ -1548,6 +1582,23 @@
       "featured": false
     },
     {
+      "id": "jgp-71482",
+      "title": "Experienced Social Worker",
+      "employer": "Kent County Council",
+      "location": "Ashford, UK",
+      "region": "Ashford, UK",
+      "type": "Permanent",
+      "mode": "On-Site",
+      "pattern": "Part time",
+      "salary": "£41,782 to £46,606 a year",
+      "posted": "14 July 2026",
+      "closing": "28 July 2026",
+      "team": "Social Work",
+      "source": "Jobs Go Public",
+      "url": "https://www.jobsgopublic.com/job/experienced-social-worker-71482",
+      "featured": false
+    },
+    {
       "id": "jgp-71439",
       "title": "Senior Social Worker Safeguarding",
       "employer": "Medway Council",
@@ -1579,23 +1630,6 @@
       "team": "Social Work",
       "source": "Jobs Go Public",
       "url": "https://www.jobsgopublic.com/job/social-worker-safeguarding-71440",
-      "featured": false
-    },
-    {
-      "id": "jgp-71482",
-      "title": "Experienced Social Worker",
-      "employer": "Kent County Council",
-      "location": "Ashford, UK",
-      "region": "Ashford, UK",
-      "type": "Permanent",
-      "mode": "On-Site",
-      "pattern": "Part time",
-      "salary": "£41,782 to £46,606 a year",
-      "posted": "14 July 2026",
-      "closing": "28 July 2026",
-      "team": "Social Work",
-      "source": "Jobs Go Public",
-      "url": "https://www.jobsgopublic.com/job/experienced-social-worker-71482",
       "featured": false
     },
     {
@@ -2381,11 +2415,62 @@
       "featured": false
     },
     {
+      "id": "jgp-74781",
+      "title": "Social Worker",
+      "employer": "Wolverhampton City Council",
+      "location": "Wolverhampton, UK",
+      "region": "Wolverhampton, UK",
+      "type": "Contract",
+      "mode": "Hybrid",
+      "pattern": "Full time",
+      "salary": "£44,075 to £49,282 a year",
+      "posted": "28 July 2026",
+      "closing": "Not listed",
+      "team": "Social Work",
+      "source": "Jobs Go Public",
+      "url": "https://www.jobsgopublic.com/job/social-worker-74781",
+      "featured": false
+    },
+    {
+      "id": "jgp-74764",
+      "title": "Social Worker Homelessness",
+      "employer": "Richmond and Wandsworth Council",
+      "location": "London SW18 3HU, UK",
+      "region": "London SW18 3HU, UK",
+      "type": "Contract",
+      "mode": "Hybrid",
+      "pattern": "Full time",
+      "salary": "£38,976 to £52,767 a year",
+      "posted": "28 July 2026",
+      "closing": "Not listed",
+      "team": "Social Work",
+      "source": "Jobs Go Public",
+      "url": "https://www.jobsgopublic.com/job/social-worker-homelessness-74764",
+      "featured": false
+    },
+    {
+      "id": "jgp-74736",
+      "title": "Social Worker",
+      "employer": "Barnet Council",
+      "location": "London Borough of Barnet, UK",
+      "region": "London Borough of Barnet, UK",
+      "type": "Permanent",
+      "mode": "Hybrid",
+      "pattern": "Full time",
+      "salary": "£42,771 to £46,968 a year",
+      "posted": "28 July 2026",
+      "closing": "10 August 2026",
+      "team": "Social Work",
+      "source": "Jobs Go Public",
+      "url": "https://www.jobsgopublic.com/job/social-worker-74736",
+      "featured": false
+    },
+    {
       "id": "jgp-74510",
       "title": "ASYE Social Worker - Fostering",
       "employer": "Milton Keynes Council",
-      "location": "Milton Keynes, UK",
-      "region": "Milton Keynes, UK",
+      "location": "V2 Tattenhoe St, Milton Keynes MK4 4DA, UK",
+      "region": "V2 Tattenhoe St, Milton Keynes MK4 4DA, UK",
       "type": "Permanent",
       "mode": "On-Site",
       "pattern": "Full time",
@@ -2741,8 +2826,8 @@
       "id": "jgp-72630",
       "title": "Social Worker",
       "employer": "Milton Keynes Council",
-      "location": "Milton Keynes, UK",
-      "region": "Milton Keynes, UK",
+      "location": "V2 Tattenhoe St, Milton Keynes MK4 4DA, UK",
+      "region": "V2 Tattenhoe St, Milton Keynes MK4 4DA, UK",
       "type": "Permanent",
       "mode": "On-Site",
       "pattern": "Full time",
@@ -2874,23 +2959,6 @@
       "featured": false
     },
     {
-      "id": "jgp-67081",
-      "title": "Principal Social Worker - Adult Social Care",
-      "employer": "City of London",
-      "location": "3rd, Guildhall, West Wing, Gresham St, London EC2V 7HH, UK",
-      "region": "3rd, Guildhall, West Wing, Gresham St, London EC2V 7HH, UK",
-      "type": "Contract",
-      "mode": "Hybrid",
-      "pattern": "Full time",
-      "salary": "£62,000 to £70,050 a year",
-      "posted": "23 June 2026",
-      "closing": "31 July 2026",
-      "team": "Adult Social Care",
-      "source": "Jobs Go Public",
-      "url": "https://www.jobsgopublic.com/job/principal-social-worker-adult-social-care-67081",
-      "featured": false
-    },
-    {
       "id": "jgp-66745",
       "title": "Social Worker (Adult Social Care) LBHF624382",
       "employer": "London Borough of Hammersmith & Fulham",
@@ -2905,6 +2973,23 @@
       "team": "Adult Social Care",
       "source": "Jobs Go Public",
       "url": "https://www.jobsgopublic.com/job/social-worker-adult-social-care-lbhf624382-66745",
+      "featured": false
+    },
+    {
+      "id": "jgp-70545",
+      "title": "Social Worker (Adults Safeguarding)",
+      "employer": "Northumberland County Council",
+      "location": "Morpeth NE61, UK",
+      "region": "Morpeth NE61, UK",
+      "type": "Permanent",
+      "mode": "Hybrid",
+      "pattern": "Full time",
+      "salary": "£39,862 to £44,075 a year",
+      "posted": "9 July 2026",
+      "closing": "Not listed",
+      "team": "Adult Social Care",
+      "source": "Jobs Go Public",
+      "url": "https://www.jobsgopublic.com/job/social-worker-adults-safeguarding-70545",
       "featured": false
     },
     {
@@ -2939,40 +3024,6 @@
       "team": "Children & Families",
       "source": "Jobs Go Public",
       "url": "https://www.jobsgopublic.com/job/social-worker-level-2-children-care-team-70577",
-      "featured": false
-    },
-    {
-      "id": "jgp-70545",
-      "title": "Social Worker (Adults Safeguarding)",
-      "employer": "Northumberland County Council",
-      "location": "Morpeth NE61, UK",
-      "region": "Morpeth NE61, UK",
-      "type": "Permanent",
-      "mode": "Hybrid",
-      "pattern": "Full time",
-      "salary": "£39,862 to £44,075 a year",
-      "posted": "9 July 2026",
-      "closing": "Not listed",
-      "team": "Adult Social Care",
-      "source": "Jobs Go Public",
-      "url": "https://www.jobsgopublic.com/job/social-worker-adults-safeguarding-70545",
-      "featured": false
-    },
-    {
-      "id": "jgp-70477",
-      "title": "Advanced Social Worker",
-      "employer": "Croydon Council",
-      "location": "London Borough of Croydon, UK",
-      "region": "London Borough of Croydon, UK",
-      "type": "Contract",
-      "mode": "Hybrid",
-      "pattern": "Full time",
-      "salary": "£53,172 to £55,323 a year",
-      "posted": "9 July 2026",
-      "closing": "Not listed",
-      "team": "Social Work",
-      "source": "Jobs Go Public",
-      "url": "https://www.jobsgopublic.com/job/advanced-social-worker-70477",
       "featured": false
     },
     {
@@ -3075,23 +3126,6 @@
       "team": "Adult Social Care",
       "source": "Jobs Go Public",
       "url": "https://www.jobsgopublic.com/job/social-worker-moving-adulthood-social-care-team-59070",
-      "featured": false
-    },
-    {
-      "id": "jgp-67391",
-      "title": "Social Worker - Care and Support",
-      "employer": "Northumberland County Council",
-      "location": "Morpeth NE61, UK",
-      "region": "Morpeth NE61, UK",
-      "type": "Permanent",
-      "mode": "On-Site",
-      "pattern": "Full time",
-      "salary": "£39,862 to £44,075 a year",
-      "posted": "24 June 2026",
-      "closing": "Not listed",
-      "team": "Social Work",
-      "source": "Jobs Go Public",
-      "url": "https://www.jobsgopublic.com/job/social-worker-care-and-support-67391",
       "featured": false
     },
     {
@@ -3302,8 +3336,8 @@
       "id": "jgp-59368",
       "title": "Social Worker - Level 2 and 3 - Children in Care",
       "employer": "Milton Keynes Council",
-      "location": "Milton Keynes, UK",
-      "region": "Milton Keynes, UK",
+      "location": "V2 Tattenhoe St, Milton Keynes MK4 4DA, UK",
+      "region": "V2 Tattenhoe St, Milton Keynes MK4 4DA, UK",
       "type": "Permanent",
       "mode": "On-Site",
       "pattern": "Full time",
@@ -3313,23 +3347,6 @@
       "team": "Children & Families",
       "source": "Jobs Go Public",
       "url": "https://www.jobsgopublic.com/job/social-worker-level-2-and-3-children-care-59368",
-      "featured": false
-    },
-    {
-      "id": "jgp-59087",
-      "title": "Social Worker/Senior Practitioner - Family Support and Safeguarding - South Oxfordshire",
-      "employer": "Oxfordshire County Council",
-      "location": "Shippon, Abingdon OX13, UK",
-      "region": "Shippon, Abingdon OX13, UK",
-      "type": "Permanent",
-      "mode": "Hybrid",
-      "pattern": "Flexible",
-      "salary": "£38,220 to £49,282 a year",
-      "posted": "25 May 2026",
-      "closing": "Not listed",
-      "team": "Children & Families",
-      "source": "Jobs Go Public",
-      "url": "https://www.jobsgopublic.com/job/social-workersenior-practitioner-family-support-and-safeguarding-south-oxfordshire-59087",
       "featured": false
     },
     {
@@ -3432,6 +3449,23 @@
       "team": "Children & Families",
       "source": "Jobs Go Public",
       "url": "https://www.jobsgopublic.com/job/social-workersenior-practitioner-family-support-and-safeguarding-banbury-59086",
+      "featured": false
+    },
+    {
+      "id": "jgp-59087",
+      "title": "Social Worker/Senior Practitioner - Family Support and Safeguarding - South Oxfordshire",
+      "employer": "Oxfordshire County Council",
+      "location": "Shippon, Abingdon OX13, UK",
+      "region": "Shippon, Abingdon OX13, UK",
+      "type": "Permanent",
+      "mode": "Hybrid",
+      "pattern": "Flexible",
+      "salary": "£38,220 to £49,282 a year",
+      "posted": "25 May 2026",
+      "closing": "Not listed",
+      "team": "Children & Families",
+      "source": "Jobs Go Public",
+      "url": "https://www.jobsgopublic.com/job/social-workersenior-practitioner-family-support-and-safeguarding-south-oxfordshire-59087",
       "featured": false
     },
     {
@@ -3554,6 +3588,23 @@
       "featured": false
     },
     {
+      "id": "NTX1223478",
+      "title": "Qualified Children's Social Worker",
+      "employer": "Cafcass",
+      "location": "Norfolk & Suffolk",
+      "region": "Norfolk & Suffolk",
+      "type": "Permanent",
+      "mode": "On-site",
+      "pattern": "Not specified",
+      "salary": "£45,749 - £49,866",
+      "posted": "28 July 2026",
+      "closing": "9 August 2026",
+      "team": "Children & Families",
+      "source": "Cafcass",
+      "url": "https://cafcass.current-vacancies.com/Jobs/Advert/4269173?cid=1663&t=Qualified-Children-s-Social-Worker",
+      "featured": false
+    },
+    {
       "id": "NTX1223397",
       "title": "Qualified Children's Social Worker - Child focused courts",
       "employer": "Cafcass",
@@ -3574,8 +3625,8 @@
       "id": "NTX1223317",
       "title": "Qualified Children's Social Worker - Child focused courts",
       "employer": "Cafcass",
-      "location": "Tyneside and Northumberland and North Durham",
-      "region": "Tyneside and Northumberland and North Durham",
+      "location": "Tyneside and North Durham",
+      "region": "Tyneside and North Durham",
       "type": "Permanent",
       "mode": "On-site",
       "pattern": "Not specified",
@@ -3690,25 +3741,25 @@
       "featured": false
     }
   ],
-  "fetchedAt": 1785220522408,
+  "fetchedAt": 1785243845564,
   "sources": [
     {
-      "keywordMatches": 4690,
-      "pagesScanned": 469,
+      "keywordMatches": 4880,
+      "pagesScanned": 488,
       "source": "https://www.jobs.nhs.uk/candidate/search/results?keyword=social%20worker&language=en",
-      "jobsImported": 62
+      "jobsImported": 64
     },
     {
-      "keywordMatches": 799,
+      "keywordMatches": 796,
       "pagesScanned": 32,
       "source": "https://www.jobsgopublic.com/jobs?search=social%20worker",
-      "jobsImported": 150
+      "jobsImported": 151
     },
     {
-      "keywordMatches": 12,
+      "keywordMatches": 14,
       "pagesScanned": 1,
       "source": "https://cafcass.current-vacancies.com/Careers/Cafcass%20VSP-1663",
-      "jobsImported": 8
+      "jobsImported": 9
     }
   ],
   "errors": []
