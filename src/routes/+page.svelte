@@ -30,6 +30,9 @@
     return Math.max(...figures.map((figure) => Number(figure.replace(/\D/g, ''))));
   };
 
+  const salaryHasPeriod = (value) =>
+    /\b(?:per\s+)?(?:annum|annual|year|hour|day|week|month)(?:ly)?\b|p\/a|p\.?a\.?/i.test(value || '');
+
   const matchesWords = (value, search) =>
     search.trim().toLowerCase().split(/\s+/).every((word) => value.toLowerCase().includes(word));
 
@@ -291,7 +294,7 @@
               <div class="job-meta"><span>⌖ {job.location}{#if userCoords && jobDistance(job) !== null} · {jobDistance(job).toFixed(1)} miles{/if}</span><span>◷ {job.type}</span><span>⌂ {job.mode}</span></div>
               <div class="salary">
                 {job.salary}
-                {#if job.salary !== 'Salary not listed'}
+                {#if job.salary !== 'Salary not listed' && !salaryHasPeriod(job.salary)}
                   <small>per {job.salaryPeriod || 'year'}</small>
                 {/if}
               </div>
