@@ -259,7 +259,6 @@
       </aside>
 
       <div class="results">
-        {#if data.error}<div class="source-warning">Live refresh issue: {data.error}. Showing the most recently cached results.</div>{/if}
         <div class="results-top">
           <div>
             <p aria-live="polite"><strong>{filtered.length} {filtered.length === 1 ? 'role' : 'roles'}</strong> matching your search</p>
