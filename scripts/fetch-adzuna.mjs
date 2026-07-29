@@ -2,8 +2,34 @@ const clean = (value = '') => String(value).replace(/\s+/g, ' ').trim();
 const ADZUNA_PAGE_SIZE = 50;
 const ADZUNA_MAX_PAGES = 80;
 const ADZUNA_REQUEST_INTERVAL_MS = 2500;
+const ADZUNA_MAX_RETRIES = 3;
 
 const wait = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
+
+async function fetchPage(url, page) {
+  for (let attempt = 1; attempt <= ADZUNA_MAX_RETRIES; attempt += 1) {
+    try {
+      const response = await fetch(url, {
+        headers: { accept: 'application/json' },
+        signal: AbortSignal.timeout(15000)
+      });
+
+      if (response.ok) return response.json();
+      const retryable = response.status === 429 || response.status >= 500;
+      if (!retryable || attempt === ADZUNA_MAX_RETRIES) {
+        throw new Error(`Adzuna page ${page} returned HTTP ${response.status}`);
+      }
+
+      const retryAfter = Number(response.headers.get('retry-after'));
+      await wait(Number.isFinite(retryAfter) && retryAfter > 0
+        ? retryAfter * 1000
+        : attempt * 3000);
+    } catch (error) {
+      if (attempt === ADZUNA_MAX_RETRIES) throw error;
+      await wait(attempt * 3000);
+    }
+  }
+}
 
 function dateLabel(value) {
   if (!value) return 'Not listed';
@@ -80,6 +106,7 @@ export async function fetchAdzuna() {
   if (!appId || !appKey) throw new Error('ADZUNA_APP_ID and ADZUNA_APP_KEY are not configured');
 
   const rawJobs = [];
+  let warning = null;
   for (let page = 1; page <= ADZUNA_MAX_PAGES; page += 1) {
     const params = new URLSearchParams({
       app_id: appId,
@@ -90,13 +117,18 @@ export async function fetchAdzuna() {
       'content-type': 'application/json'
     });
 
-    const response = await fetch(`https://api.adzuna.com/v1/api/jobs/gb/search/${page}?${params}`, {
-      headers: { accept: 'application/json' },
-      signal: AbortSignal.timeout(15000)
-    });
+    let payload;
+    try {
+      payload = await fetchPage(
+        `https://api.adzuna.com/v1/api/jobs/gb/search/${page}?${params}`,
+        page
+      );
+    } catch (error) {
+      if (!rawJobs.length) throw error;
+      warning = error instanceof Error ? error.message : String(error);
+      break;
+    }
 
-    if (!response.ok) throw new Error(`Adzuna page ${page} returned HTTP ${response.status}`);
-    const payload = await response.json();
     const pageJobs = payload.results || [];
     rawJobs.push(...pageJobs);
 
@@ -113,6 +145,7 @@ export async function fetchAdzuna() {
     source: 'Adzuna',
     url: 'https://www.adzuna.co.uk/',
     fetchedAt: new Date().toISOString(),
+    ...(warning ? { warning } : {}),
     jobs: [...new Map(jobs.map((job) => [job.id, job])).values()]
   };
 }
