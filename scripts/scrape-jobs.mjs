@@ -3,6 +3,7 @@ import { scrapeNhs } from './scrape-nhs.mjs';
 import { scrapeJobsGoPublic } from './scrape-jobsgopublic.mjs';
 import { scrapeCafcass } from './scrape-cafcass.mjs';
 import { fetchJooble } from './fetch-jooble.mjs';
+import { fetchAdzuna } from './fetch-adzuna.mjs';
 
 function normalise(value = '') {
   return value.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
@@ -25,7 +26,8 @@ const results = await Promise.allSettled([
   scrapeNhs(),
   scrapeJobsGoPublic(),
   scrapeCafcass(),
-  fetchJooble()
+  fetchJooble(),
+  fetchAdzuna()
 ]);
 const sources = results
   .filter((result) => result.status === 'fulfilled')
