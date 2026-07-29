@@ -3,113 +3,150 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { pathToFileURL } from 'node:url';
 
 const BASE = 'https://www.jobs.nhs.uk';
-const SEARCH = `${BASE}/candidate/search/results?keyword=social%20worker&language=en`;
+const SEARCH = `${BASE}/api/v1/search_xml?keyword=social%20worker&limit=100&sort=publicationDateDesc`;
 const CONCURRENCY = 6;
 
-const clean = (value = '') => value.replace(/\s+/g, ' ').trim();
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+const clean = (value = '') => String(value).replace(/\s+/g, ' ').trim();
+const delay = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
 
-function workingMode(pattern) {
-  const value = pattern.toLowerCase();
-  if (value.includes('home') || value.includes('remote')) return 'Remote';
-  if (value.includes('flexible')) return 'Flexible';
+function dateLabel(value) {
+  if (!value) return 'Not listed';
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return 'Not listed';
+  return new Intl.DateTimeFormat('en-GB', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'Europe/London'
+  }).format(date);
+}
+
+function salaryLabel(value) {
+  const salary = clean(value);
+  if (!salary) return 'Salary not listed';
+  return salary.replace(/£(\d+(?:\.\d+)?)/g, (_, number) => {
+    const amount = Number(number);
+    if (!Number.isFinite(amount)) return `£${number}`;
+    return new Intl.NumberFormat('en-GB', {
+      style: 'currency',
+      currency: 'GBP',
+      minimumFractionDigits: amount % 1 ? 2 : 0,
+      maximumFractionDigits: 2
+    }).format(amount);
+  });
+}
+
+function workingMode(value) {
+  if (/remote|home[- ]?based|work(?:ing)? from home/i.test(value)) return 'Remote';
+  if (/hybrid/i.test(value)) return 'Hybrid';
+  if (/flexible/i.test(value)) return 'Flexible';
   return 'On-site';
 }
 
-function teamFrom(title) {
-  const value = title.toLowerCase();
-  if (value.includes('mental health')) return 'Mental Health';
-  if (value.includes('child') || value.includes('family')) return 'Children & Families';
-  if (value.includes('foster')) return 'Fostering';
-  if (value.includes('learning disabil')) return 'Learning Disabilities';
-  if (value.includes('adult')) return 'Adult Social Care';
+function workingPattern(value) {
+  if (/part[- ]?time/i.test(value)) return 'Part time';
+  if (/full[- ]?time/i.test(value)) return 'Full time';
+  return 'Not specified';
+}
+
+function teamFrom(value) {
+  const text = value.toLowerCase();
+  if (text.includes('mental health')) return 'Mental Health';
+  if (text.includes('child') || text.includes('family')) return 'Children & Families';
+  if (text.includes('foster')) return 'Fostering';
+  if (text.includes('learning disabil')) return 'Learning Disabilities';
+  if (text.includes('adult')) return 'Adult Social Care';
   return 'Social Work';
 }
 
 async function fetchPage(page, attempts = 3) {
   try {
     const response = await fetch(`${SEARCH}&page=${page}`, {
-      headers: { 'user-agent': 'SocialWorkUK/1.0 (+UK social-work vacancy index)' },
+      headers: {
+        accept: 'application/xml',
+        'user-agent': 'SocialWorkUK/1.0 (+UK social-work vacancy index)'
+      },
       signal: AbortSignal.timeout(15000)
     });
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    return await response.text();
+    if (!response.ok) throw new Error(`NHS Jobs API page ${page} returned HTTP ${response.status}`);
+    return response.text();
   } catch (error) {
     if (attempts <= 1) throw error;
-    await delay(700 * (4 - attempts));
+    await delay(1000 * (4 - attempts));
     return fetchPage(page, attempts - 1);
   }
 }
 
-function parsePage(html) {
-  const $ = cheerio.load(html);
+function parsePage(xml) {
+  const $ = cheerio.load(xml, { xmlMode: true });
   const jobs = [];
 
-  $('[data-test="search-result"]').each((_, element) => {
-    const card = $(element);
-    const link = card.find('[data-test="search-result-job-title"]').first();
-    const title = clean(link.text());
-    const href = link.attr('href');
-    if (!title || !href || !/\bsocial\s+worker\b/i.test(title)) return;
+  $('vacancyDetails').each((_, element) => {
+    const vacancy = $(element);
+    const field = (name) => clean(vacancy.children(name).first().text());
+    const title = field('title');
+    if (!/\bsocial\s+worker\b/i.test(title)) return;
 
-    const locationBlock = card.find('[data-test="search-result-location"]');
-    const location = clean(locationBlock.find('.location-font-size').text());
-    locationBlock.find('.location-font-size').remove();
-    const field = (name) => clean(card.find(`[data-test="${name}"] strong`).text());
-    const contract = field('search-result-jobType');
-    const pattern = field('search-result-workingPattern');
+    const description = field('description');
+    const locations = vacancy.find('locations > location')
+      .map((__, location) => clean($(location).text()))
+      .get()
+      .filter(Boolean);
+    const location = locations.join(' · ') || 'United Kingdom';
+    const contract = field('type');
 
     jobs.push({
-      id: href.split('/').pop()?.split('?')[0] || href,
+      id: `nhs-${field('id') || field('reference')}`,
       title,
-      employer: clean(locationBlock.text()),
+      employer: field('employer') || 'Employer not listed',
       location,
       region: location,
-      type: /fixed|temporary|locum/i.test(contract) ? 'Contract' : contract || 'Not specified',
-      mode: workingMode(pattern),
-      pattern,
-      salary: field('search-result-salary') || 'Salary not listed',
-      posted: field('search-result-publicationDate'),
-      closing: field('search-result-closingDate'),
-      team: teamFrom(title),
+      type: /fixed|temporary|locum|secondment|bank/i.test(contract)
+        ? 'Contract'
+        : contract || 'Not specified',
+      mode: workingMode(`${title} ${description} ${location}`),
+      pattern: workingPattern(`${title} ${description}`),
+      salary: salaryLabel(field('salary')),
+      salaryPeriod: null,
+      posted: dateLabel(field('postDate')),
+      closing: dateLabel(field('closeDate')),
+      team: teamFrom(`${title} ${description}`),
       source: 'NHS Jobs',
-      url: `${BASE}${href.replace(/&amp;/g, '&')}`,
+      url: field('url'),
       featured: false
     });
   });
 
-  return jobs;
+  return {
+    jobs,
+    totalPages: Number($('nhsJobs > totalPages').first().text()) || 1,
+    totalResults: Number($('nhsJobs > totalResults').first().text()) || 0
+  };
 }
 
 export async function scrapeNhs() {
-  console.log('Reading NHS Jobs pagination…');
-  const firstHtml = await fetchPage(1);
-  const $ = cheerio.load(firstHtml);
-  const pageText = clean($('.nhsuk-pagination__page').last().text());
-  const totalPages = Number(pageText.match(/of\s+(\d+)/i)?.[1] || 1);
-  const resultText = clean($('[data-test="search-result-query"]').text());
-  const keywordMatches = Number(resultText.replace(/\D/g, '')) || 0;
-  const pages = Array.from({ length: totalPages - 1 }, (_, index) => index + 2);
-  const collected = parsePage(firstHtml);
+  console.log('Reading the official NHS Jobs XML API…');
+  const first = parsePage(await fetchPage(1));
+  const pages = Array.from({ length: first.totalPages - 1 }, (_, index) => index + 2);
+  const collected = [...first.jobs];
 
-  console.log(`Scanning ${totalPages} NHS pages (${keywordMatches} keyword matches), ${CONCURRENCY} requests at a time…`);
+  console.log(`Scanning ${first.totalPages} NHS API pages (${first.totalResults} keyword matches)…`);
   for (let offset = 0; offset < pages.length; offset += CONCURRENCY) {
     const batch = pages.slice(offset, offset + CONCURRENCY);
     const results = await Promise.all(batch.map(async (page) => parsePage(await fetchPage(page))));
-    collected.push(...results.flat());
-    if ((offset / CONCURRENCY) % 10 === 0) console.log(`Processed ${Math.min(offset + CONCURRENCY + 1, totalPages)}/${totalPages} NHS pages`);
+    collected.push(...results.flatMap((result) => result.jobs));
     await delay(120);
   }
 
   return {
     jobs: [...new Map(collected.map((job) => [job.id, job])).values()],
-    keywordMatches,
-    pagesScanned: totalPages,
+    keywordMatches: first.totalResults,
+    pagesScanned: first.totalPages,
     source: SEARCH
   };
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const result = await scrapeNhs();
   const snapshot = { ...result, fetchedAt: Date.now() };
   await mkdir('src/lib', { recursive: true });
