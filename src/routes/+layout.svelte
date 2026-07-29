@@ -1,11 +1,9 @@
 <script>
-  import { onMount } from 'svelte';
+  import { dev } from '$app/environment';
   import { injectAnalytics } from '@vercel/analytics/sveltekit';
   import '../app.css';
 
-  onMount(() => {
-    injectAnalytics();
-  });
+  injectAnalytics({ mode: dev ? 'development' : 'production' });
 </script>
 
 <slot />
