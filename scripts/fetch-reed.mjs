@@ -5,7 +5,10 @@ const REED_DETAIL_BATCH_SIZE = 10;
 
 function dateLabel(value) {
   if (!value) return 'Not listed';
-  const date = new Date(value);
+  const ukDate = String(value).match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  const date = ukDate
+    ? new Date(Date.UTC(Number(ukDate[3]), Number(ukDate[2]) - 1, Number(ukDate[1])))
+    : new Date(value);
   if (Number.isNaN(date.getTime())) return 'Not listed';
   return new Intl.DateTimeFormat('en-GB', {
     day: 'numeric',
