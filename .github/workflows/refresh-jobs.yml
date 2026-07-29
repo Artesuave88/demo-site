@@ -61,6 +61,15 @@ jobs:
 
       - name: Commit updated listings
         run: |
+          snapshot_file="$(mktemp)"
+          cp src/lib/jobs.json "$snapshot_file"
+
+          git fetch origin "${GITHUB_REF_NAME}"
+          git reset --hard "origin/${GITHUB_REF_NAME}"
+
+          cp "$snapshot_file" src/lib/jobs.json
+          rm -f "$snapshot_file"
+
           if git diff --quiet -- src/lib/jobs.json; then
             echo "Job listings are already current."
             exit 0
@@ -70,4 +79,4 @@ jobs:
           git config user.email "actions@users.noreply.github.com"
           git add src/lib/jobs.json
           git commit -m "chore: refresh job listings"
-          git push
+          git push origin "HEAD:${GITHUB_REF_NAME}"
