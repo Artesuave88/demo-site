@@ -4,6 +4,7 @@ import snapshot from '$lib/jobs.json';
 const clean = (value = '') => value.replace(/\s+/g, ' ').trim();
 const normalise = (value = '') => value.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
 const ADZUNA_PAGE_SIZE = 50;
+const JOOBLE_PAGE_SIZE = 50;
 
 function dateLabel(value) {
   if (!value) return 'Not listed';
@@ -74,6 +75,42 @@ function mapAdzunaJob(job) {
   };
 }
 
+function mapJoobleJob(job) {
+  const description = clean(job.snippet);
+  const type = clean(job.type);
+  const location = clean(job.location) || 'United Kingdom';
+
+  return {
+    id: `jooble-${job.id}`,
+    title: clean(job.title),
+    employer: clean(job.company) || 'Employer not listed',
+    location,
+    region: location,
+    type: /contract|temporary|fixed/i.test(`${type} ${description}`) ? 'Contract' : 'Permanent',
+    mode: /remote|home[- ]?based/i.test(`${job.title || ''} ${description}`)
+      ? 'Remote'
+      : /hybrid/i.test(`${job.title || ''} ${description}`)
+        ? 'Hybrid'
+        : 'On-site',
+    pattern: /part[- ]?time/i.test(type)
+      ? 'Part time'
+      : /full[- ]?time/i.test(type)
+        ? 'Full time'
+        : 'Not specified',
+    salary: clean(job.salary) || 'Salary not listed',
+    posted: dateLabel(job.updated),
+    closing: 'Not listed',
+    team: teamFrom({ title: job.title, description }),
+    source: 'Jooble',
+    url: job.link,
+    featured: false
+  };
+}
+
+function isSocialWorkJob(job) {
+  return /\bsocial\s+work(?:er|ers|ing)?\b/i.test(clean(job.title));
+}
+
 async function fetchAdzunaJobs(fetcher) {
   if (!env.ADZUNA_APP_ID || !env.ADZUNA_APP_KEY) return { jobs: [], error: null };
 
@@ -102,6 +139,7 @@ async function fetchAdzunaJobs(fetcher) {
     }
     const payload = await response.json();
     const jobs = (payload.results || [])
+      .filter(isSocialWorkJob)
       .map(mapAdzunaJob)
       .filter((job) => job.title && job.url);
 
@@ -111,6 +149,46 @@ async function fetchAdzunaJobs(fetcher) {
     };
   } catch (error) {
     return { jobs: [], error: error instanceof Error ? error.message : 'Adzuna refresh failed' };
+  }
+}
+
+async function fetchJoobleJobs(fetcher) {
+  if (!env.JOOBLE_API_KEY) return { jobs: [], error: null };
+
+  try {
+    const response = await fetcher(`https://uk.jooble.org/api/${env.JOOBLE_API_KEY}`, {
+      method: 'POST',
+      headers: {
+        accept: 'application/json',
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify({
+        keywords: 'social worker',
+        location: 'United Kingdom',
+        page: '1',
+        ResultOnPage: String(JOOBLE_PAGE_SIZE),
+        companysearch: 'false'
+      }),
+      signal: AbortSignal.timeout(15000)
+    });
+
+    if (!response.ok) {
+      if (response.status === 429) return { jobs: [], error: null };
+      throw new Error(`Jooble returned HTTP ${response.status}`);
+    }
+
+    const payload = await response.json();
+    const jobs = (payload.jobs || [])
+      .filter(isSocialWorkJob)
+      .map(mapJoobleJob)
+      .filter((job) => job.title && job.url);
+
+    return {
+      jobs: [...new Map(jobs.map((job) => [job.id, job])).values()],
+      error: null
+    };
+  } catch (error) {
+    return { jobs: [], error: error instanceof Error ? error.message : 'Jooble refresh failed' };
   }
 }
 
@@ -125,11 +203,18 @@ function dedupeKey(job) {
 
 export async function load({ fetch, setHeaders }) {
   setHeaders({ 'cache-control': 'public, max-age=300, s-maxage=86400, stale-while-revalidate=3600' });
-  const adzuna = await fetchAdzunaJobs(fetch);
+  const [adzuna, jooble] = await Promise.all([
+    fetchAdzunaJobs(fetch),
+    fetchJoobleJobs(fetch)
+  ]);
   const jobs = [...new Map(
-    [...snapshot.jobs, ...adzuna.jobs].map((job) => [dedupeKey(job), job])
+    [...snapshot.jobs, ...adzuna.jobs, ...jooble.jobs].map((job) => [dedupeKey(job), job])
   ).values()];
-  const errors = [...(snapshot.errors || []), ...(adzuna.error ? [adzuna.error] : [])];
+  const errors = [
+    ...(snapshot.errors || []),
+    ...(adzuna.error ? [adzuna.error] : []),
+    ...(jooble.error ? [jooble.error] : [])
+  ];
 
   return {
     ...snapshot,
