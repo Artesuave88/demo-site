@@ -290,7 +290,12 @@
                 </div>
               </div>
               <div class="job-meta"><span>⌖ {job.location}{#if userCoords && jobDistance(job) !== null} · {jobDistance(job).toFixed(1)} miles{/if}</span><span>◷ {job.type}</span><span>⌂ {job.mode}</span></div>
-              <div class="salary">{job.salary} <small>per year</small></div>
+              <div class="salary">
+                {job.salary}
+                {#if job.salary !== 'Salary not listed'}
+                  <small>per {job.salaryPeriod || 'year'}</small>
+                {/if}
+              </div>
               <div class="job-foot">
                 <span>{job.team}</span>
                 <p>Posted {job.posted} · closes {job.closing} · via {job.source}</p>

@@ -1,6 +1,7 @@
 const clean = (value = '') => String(value).replace(/\s+/g, ' ').trim();
 const REED_PAGE_SIZE = 100;
 const REED_MAX_PAGES = 100;
+const REED_DETAIL_BATCH_SIZE = 10;
 
 function dateLabel(value) {
   if (!value) return 'Not listed';
@@ -50,7 +51,7 @@ function mapJob(job) {
     employer: clean(job.employerName) || 'Employer not listed',
     location,
     region: location,
-    type: /contract|temporary|fixed[- ]?term/i.test(`${title} ${description}`)
+    type: /contract|temporary|fixed[- ]?term/i.test(`${job.contractType || ''} ${title} ${description}`)
       ? 'Contract'
       : 'Permanent',
     mode: /remote|home[- ]?based|work from home/i.test(`${title} ${description}`)
@@ -58,12 +59,13 @@ function mapJob(job) {
       : /hybrid/i.test(`${title} ${description}`)
         ? 'Hybrid'
         : 'On-site',
-    pattern: /part[- ]?time/i.test(`${title} ${description}`)
+    pattern: /part[- ]?time/i.test(`${job.jobType || ''} ${title} ${description}`)
       ? 'Part time'
-      : /full[- ]?time/i.test(`${title} ${description}`)
+      : /full[- ]?time/i.test(`${job.jobType || ''} ${title} ${description}`)
         ? 'Full time'
         : 'Not specified',
     salary: salaryLabel(job),
+    salaryPeriod: clean(job.salaryType).replace(/^per\s+/i, '') || 'year',
     posted: dateLabel(job.date),
     closing: dateLabel(job.expirationDate),
     team: teamFrom(job),
@@ -99,8 +101,28 @@ export async function fetchReed() {
     if (pageJobs.length < REED_PAGE_SIZE || rawJobs.length >= Number(payload.totalResults || 0)) break;
   }
 
-  const jobs = rawJobs
-    .filter((job) => /\bsocial\s+work(?:er|ers|ing)?\b/i.test(clean(job.jobTitle)))
+  const matchingJobs = rawJobs
+    .filter((job) => /\bsocial\s+work(?:er|ers|ing)?\b/i.test(clean(job.jobTitle)));
+  const detailedJobs = [];
+
+  for (let index = 0; index < matchingJobs.length; index += REED_DETAIL_BATCH_SIZE) {
+    const batch = matchingJobs.slice(index, index + REED_DETAIL_BATCH_SIZE);
+    const details = await Promise.all(batch.map(async (job) => {
+      try {
+        const response = await fetch(`https://www.reed.co.uk/api/1.0/jobs/${job.jobId}`, {
+          headers: { accept: 'application/json', authorization },
+          signal: AbortSignal.timeout(15000)
+        });
+        if (!response.ok) return job;
+        return { ...job, ...await response.json() };
+      } catch {
+        return job;
+      }
+    }));
+    detailedJobs.push(...details);
+  }
+
+  const jobs = detailedJobs
     .map(mapJob)
     .filter((job) => job.title && job.url);
 
