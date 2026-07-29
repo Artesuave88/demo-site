@@ -34,6 +34,8 @@ jobs:
 
       - name: Scrape current vacancies
         run: npm run scrape:jobs
+        env:
+          JOOBLE_API_KEY: ${{ secrets.JOOBLE_API_KEY }}
 
       - name: Validate the snapshot
         run: |

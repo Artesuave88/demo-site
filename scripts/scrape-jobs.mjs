@@ -2,6 +2,7 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { scrapeNhs } from './scrape-nhs.mjs';
 import { scrapeJobsGoPublic } from './scrape-jobsgopublic.mjs';
 import { scrapeCafcass } from './scrape-cafcass.mjs';
+import { fetchJooble } from './fetch-jooble.mjs';
 
 function normalise(value = '') {
   return value.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
@@ -20,7 +21,12 @@ function exactSocialWorker(job) {
   return /\bsocial\s+worker\b/i.test(job.title || '');
 }
 
-const results = await Promise.allSettled([scrapeNhs(), scrapeJobsGoPublic(), scrapeCafcass()]);
+const results = await Promise.allSettled([
+  scrapeNhs(),
+  scrapeJobsGoPublic(),
+  scrapeCafcass(),
+  fetchJooble()
+]);
 const sources = results
   .filter((result) => result.status === 'fulfilled')
   .map((result) => result.value);
