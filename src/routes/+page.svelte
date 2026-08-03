@@ -36,6 +36,8 @@
   const matchesWords = (value, search) =>
     search.trim().toLowerCase().split(/\s+/).every((word) => value.toLowerCase().includes(word));
 
+  const isCafcassEmployer = (employer) => /^cafcass$/i.test(employer?.trim() || '');
+
   const distanceMiles = (from, to) => {
     const radians = (degrees) => degrees * Math.PI / 180;
     const dLat = radians(to.latitude - from.latitude);
@@ -285,7 +287,13 @@
             <article class:featured={job.featured}>
               {#if job.featured}<span class="featured-label">FEATURED</span>{/if}
               <div class="job-head">
-                <div class="employer-logo">{job.employer.split(' ').slice(0,2).map(w => w[0]).join('')}</div>
+                <div class:has-logo={isCafcassEmployer(job.employer)} class="employer-logo">
+                  {#if isCafcassEmployer(job.employer)}
+                    <img src="/logos/cafcass.svg" alt="Cafcass" />
+                  {:else}
+                    {job.employer.split(' ').slice(0,2).map(w => w[0]).join('')}
+                  {/if}
+                </div>
                 <div>
                   <h3>{job.title}</h3>
                   <p class="employer">{job.employer}</p>
