@@ -241,7 +241,7 @@
     <div class="section-heading">
       <div>
         <div class="eyebrow"><span></span> Fresh opportunities</div>
-        <h2>Roles worth showing up for</h2>
+        <h2>Care to take a look...</h2>
       </div>
       <p>We organise listings from across the UK, so you can spend less time searching and more time choosing.</p>
     </div>
