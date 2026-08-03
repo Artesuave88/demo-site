@@ -178,7 +178,7 @@
   <section class="hero">
     <div class="hero-inner">
       <div class="eyebrow"><span></span> The UK’s social work job search</div>
-      <h1>Make your next move<br /><em>matter.</em></h1>
+      <h1>Find your role<br /><em>in changing lives.</em></h1>
       <p class="hero-copy">Find social work roles that fit your experience, priorities and life — without searching every employer site yourself.</p>
 
       <div class="search-panel">
