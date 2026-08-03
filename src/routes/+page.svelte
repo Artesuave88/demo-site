@@ -179,7 +179,7 @@
     <div class="hero-inner">
       <div class="eyebrow"><span></span> The UK’s social work job search</div>
       <h1>Find your role<br /><em>in changing lives.</em></h1>
-      <p class="hero-copy">Find social work roles that fit your experience, priorities and life — without searching every employer site yourself.</p>
+      <p class="hero-copy">Every Social Work opportunity in the UK - In one place</p>
 
       <div class="search-panel">
         <label>
